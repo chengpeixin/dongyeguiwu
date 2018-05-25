@@ -1,23 +1,22 @@
 const mongoose = require('mongoose')
-Schema = mongoose.Schema;
-
-const book_schema = new Schema({
-  id: {
-    type: Number
-  },
-  text: [{
-    text: [String],
-    title: String
-  }],
+autoinc = require('mongoose-plugin-autoinc'),
+  autoIncrement = autoinc.autoIncrement,
+  Schema = mongoose.Schema;
+var BookSchema = new Schema({
   imgSrc: String,
-  bookId: Number,
   bookName: String,
   summery: String,
   author: String,
-  href: String
-})
-book_schema.pre('save', function (next) {
+  text: Array
+});
+BookSchema.plugin(autoIncrement, {
+  model: 'higashinokeigo',
+  field: 'id',
+  startAt: 10,
+  incrementBy: 1
+});
+BookSchema.pre('save', function (next) {
   next()
 })
 
-mongoose.model('KeigoHigashinoNovel', book_schema)
+const bookModel = mongoose.model('higashinokeigo', BookSchema)

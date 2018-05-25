@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-bookList = mongoose.model('KeigoHigashinoNovel'),
+bookList = mongoose.model('higashinokeigo'),
   URL = require('url');
 class BookList {
   static async getBookList(ctx) {
@@ -10,8 +10,7 @@ class BookList {
         img: v.imgSrc,
         bookName: v.bookName,
         summery: v.summery,
-        author: v.author,
-        chapterNum: i
+        author: v.author
       })
     })
     ctx.body = {
@@ -20,7 +19,6 @@ class BookList {
   }
   static async getBook(ctx) {
     const params = ctx.request.body;
-    console.log(ctx.params)
     if (!params.bookName) {
       ctx.body = {
         data: ['无数据']
